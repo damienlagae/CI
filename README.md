@@ -12,6 +12,7 @@ Centralized repository for reusable GitHub CI remote config files.
 * [Composer-validate](.github/workflows/composer-validate.yml)
 * [PHPStan](.github/workflows/phpstan.yml)
 * [PHP-CS-Fixer](.github/workflows/php-cs-fixer.yml)
+* [Simple PHPUnit](.github/workflows/simple-phpunit.yml)
 * [PHPUnit](.github/workflows/phpunit.yml)
 
 ## About
