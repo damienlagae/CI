@@ -54,26 +54,12 @@ jobs:
                     --coverage-text \
                     --coverage-clover coverage.xml 
 
-            - name: Upload test results (JUnit)
-              if: ${{ inputs.coverage-report }}
-              uses: actions/upload-artifact@v4
-              with:
-                  name: phpunit-results
-                  path: junit.xml
-
-            - name: Upload coverage report
-              if: ${{ inputs.coverage-report }}
-              uses: actions/upload-artifact@v4
-              with:
-                  name: phpunit-coverage
-                  path: coverage.xml
-
             - name: Upload test results to Codecov
               if: ${{ inputs.coverage-report }}
               uses: codecov/test-results-action@v1
               with:
-                files: junit.xml
-                token: ${{ secrets.CODECOV_TOKEN }}
+                  file: junit.xml
+                  token: ${{ secrets.CODECOV_TOKEN }}
 
             - name: Upload coverage to Codecov
               if: ${{ inputs.coverage-report }}
