@@ -23,6 +23,11 @@ on:
               required: false
               default: false
               type: boolean
+            codecov-token:
+              description: Codecov token
+              required: false
+              default: ${{ secrets.CODECOV_TOKEN }}
+              type: string
 
 jobs:
     phpunit:
@@ -59,11 +64,11 @@ jobs:
               uses: codecov/test-results-action@v1
               with:
                   file: junit.xml
-                  token: ${{ secrets.CODECOV_TOKEN }}
+                  token: ${{ inputs.codecov-token }}
 
             - name: Upload coverage to Codecov
               if: ${{ inputs.coverage-report }}
               uses: codecov/codecov-action@v5
               with:
                   files: coverage.xml
-                  token: ${{ secrets.CODECOV_TOKEN }}
+                  token: ${{ inputs.codecov-token }}
