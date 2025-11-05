@@ -68,6 +68,13 @@ jobs:
                   name: phpunit-coverage
                   path: coverage.xml
 
+            - name: Upload test results to Codecov
+              if: ${{ inputs.coverage-report }}
+              uses: codecov/test-results-action@v1
+              with:
+                files: junit.xml
+                token: ${{ secrets.CODECOV_TOKEN }}
+
             - name: Upload coverage to Codecov
               if: ${{ inputs.coverage-report }}
               uses: codecov/codecov-action@v5
