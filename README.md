@@ -9,11 +9,11 @@ Centralized repository for reusable GitHub CI remote config files.
 
 ## Workflow
 
-* [Composer-validate](.github/workflows/composer-validate.yml)
-* [PHPStan](.github/workflows/phpstan.yml)
-* [PHP-CS-Fixer](.github/workflows/php-cs-fixer.yml)
-* [Simple PHPUnit](.github/workflows/simple-phpunit.yml)
-* [PHPUnit](.github/workflows/phpunit.yml)
+* [Composer-validate](.github/workflows/composer-validate.yaml)
+* [PHPStan](.github/workflows/phpstan.yaml)
+* [PHP-CS-Fixer](.github/workflows/php-cs-fixer.yaml)
+* [PHPUnit - Single](.github/workflows/phpunit-single.yaml)
+* [PHPUnit - Matrix](.github/workflows/phpunit.yaml)
 
 ## About
 Originally designed by [Damien Lagae][1]. If you have any questions, please contact [Damien Lagae][1].

@@ -1,0 +1,76 @@
+name: Run PHPUnit tests
+
+on:
+    workflow_call:
+        inputs:
+            php-version:
+                description: PHP versions used
+                required: false
+                default: "8.4"
+                type: string
+            runs-on:
+                description: The "runs-on" platform config
+                required: false
+                default: 'ubuntu-latest'
+                type: string
+            php-extensions:
+                description: PHP extensions to install
+                required: false
+                default: "mbstring, intl, pdo_mysql"
+                type: string
+            coverage-report:
+              description: Generate coverage report and upload to Codecov
+              required: false
+              default: false
+              type: boolean
+
+jobs:
+    phpunit:
+        name: PHP ${{ inputs.php-version }}
+        runs-on: ${{ inputs.runs-on }}
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ inputs.php-version }}
+                  extensions: ${{ inputs.php-extensions }}
+                  coverage: pcov
+                  ini-values: memory_limit=-1
+
+            - name: Install Composer dependencies
+              uses: ramsey/composer-install@v2
+              with:
+                  composer-options: --prefer-dist --no-progress --no-interaction
+
+            - name: Run PHPUnit
+              run: |
+                  vendor/bin/phpunit \
+                    --testdox \
+                    --log-junit junit.xml \
+                    --coverage-text \
+                    --coverage-clover coverage.xml 
+
+            - name: Upload test results (JUnit)
+              if: ${{ inputs.coverage-report }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: phpunit-results
+                  path: junit.xml
+
+            - name: Upload coverage report
+              if: ${{ inputs.coverage-report }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: phpunit-coverage
+                  path: coverage.xml
+
+            - name: Upload coverage to Codecov
+              if: ${{ inputs.coverage-report }}
+              uses: codecov/codecov-action@v5
+              with:
+                  files: coverage.xml
+                  token: ${{ secrets.CODECOV_TOKEN }}
