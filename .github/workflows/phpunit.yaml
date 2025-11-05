@@ -66,11 +66,4 @@ jobs:
 
             - name: Run PHPUnit
               run: |
-                vendor/bin/phpunit --testdox --log-junit junit.xml
-
-            - name: Upload results
-              if: always()
-              uses: actions/upload-artifact@v4
-              with:
-                name: phpunit-results
-                path: junit.xml
+                vendor/bin/phpunit --testdox
