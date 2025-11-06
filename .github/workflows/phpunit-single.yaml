@@ -23,43 +23,11 @@ on:
         required: false
         default: false
         type: boolean
-      mysql-db:
-        description: MySQL database name
-        required: false
-        default: "app"
-        type: string
-      mysql-user:
-        description: MySQL user name
-        required: false
-        default: "app"
-        type: string
-      mysql-password:
-        description: MySQL user password
-        required: false
-        default: "!ChangeMe!"
-        type: string
 
 jobs:
   phpunit:
     name: PHP ${{ inputs.php-version }}
     runs-on: ${{ inputs.runs-on }}
-
-    services:
-      database:
-        image: mysql:8-oracle
-        env:
-          MYSQL_DATABASE: ${{ inputs.mysql-db }}
-          MYSQL_USER: ${{ inputs.mysql-user }}
-          MYSQL_PASSWORD: ${{ inputs.mysql-password }}
-          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
